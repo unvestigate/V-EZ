@@ -136,6 +136,16 @@ target_link_libraries(VEZ
     PRIVATE spirv-cross-glsl
 )
 
+if (SDK_NAME MATCHES "iphoneos")
+    target_link_libraries(VEZ
+        PRIVATE "-framework Metal"
+        PRIVATE "-framework Foundation"
+        PRIVATE "-framework QuartzCore"
+        PRIVATE "-framework IOKit"
+        PRIVATE "-framework UIKit"
+    )
+endif()
+
 if(NOT WIN32)
     target_link_libraries(VEZ
         PRIVATE dl

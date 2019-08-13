@@ -24,6 +24,11 @@
 cmake_minimum_required(VERSION 3.8)
 project(VEZ VERSION 1.1.0 LANGUAGES CXX)
 
+if (SDK_NAME MATCHES "iphoneos")
+  set(Vulkan_LIBRARY ${VULKAN_SDK}/MoltenVK/iOS/static/libMoltenVK.a)
+  set(Vulkan_INCLUDE_DIR ${VULKAN_SDK}/MoltenVK/include)
+endif()
+
 find_package(Vulkan REQUIRED)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)

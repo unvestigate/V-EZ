@@ -104,6 +104,7 @@ typedef struct VezSwapchainCreateInfo
     VkSurfaceKHR surface;
     VkSurfaceFormatKHR format;
     VkBool32 tripleBuffer;
+    VkCompositeAlphaFlagBitsKHR compositeAlpha;
 } VezSwapchainCreateInfo;
 
 typedef struct VezDeviceCreateInfo

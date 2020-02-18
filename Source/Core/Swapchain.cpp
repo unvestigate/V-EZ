@@ -240,7 +240,8 @@ namespace vez
         swapchainCreateInfo.pQueueFamilyIndices = &queueFamilyIndex;
 
         swapchainCreateInfo.preTransform = m_swapchainSupport.capabilities.currentTransform;
-        swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+        // swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+        swapchainCreateInfo.compositeAlpha = m_createInfo.compositeAlpha;
         swapchainCreateInfo.presentMode = presentMode;
         swapchainCreateInfo.clipped = VK_TRUE;
         swapchainCreateInfo.oldSwapchain = m_handle;

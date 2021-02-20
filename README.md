@@ -67,3 +67,9 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN} \
 
 make -j4 install
 ```
+
+### Build for MacOS / iOS
+
+Instructions will be updated, we haven't worked on Apple's platforms recently since the last testing.
+
+The project is subjected to work on MacOS / iOS. If someone could try building, feel free to open MR or Issue and add some build commands examples.

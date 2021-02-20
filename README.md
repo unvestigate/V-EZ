@@ -2,9 +2,9 @@
 
 V-EZ is an open source, cross-platform (Windows and Linux) wrapper intended to alleviate the inherent complexity and application responsibility of using the Vulkan API. V-EZ attempts to bridge the gap between traditional graphics APIs and Vulkan by providing similar semantics to Vulkan while lowering the barrier to entry and providing an easier to use API.
 
-<img src="https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/blob/master/Docs/img/VulkanAPI.PNG" />
+![](https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/V-EZ/master/Docs/img/VulkanAPI.PNG)
 
-<img src="https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/blob/master/Docs/img/V-EZ.PNG" />
+![](https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/V-EZ/master/Docs/img/V-EZ.PNG)
 
 ## Documentation
 

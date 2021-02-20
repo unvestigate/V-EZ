@@ -1,30 +1,40 @@
 # V-EZ
 
-V-EZ is an open source, cross-platform (Windows and Linux) wrapper intended to alleviate the inherent complexity and application responsibility of using the Vulkan API. V-EZ attempts to bridge the gap between traditional graphics APIs and Vulkan by providing similar semantics to Vulkan while lowering the barrier to entry and providing an easier to use API.
+V-EZ is an open source, cross-platform wrapper intended to alleviate the inherent complexity and application responsibility of using the Vulkan API. V-EZ attempts to bridge the gap between traditional graphics APIs and Vulkan by providing similar semantics to Vulkan while lowering the barrier to entry and providing an easier to use API.
 
 ![](https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/V-EZ/master/Docs/img/VulkanAPI.PNG)
 
 ![](https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/V-EZ/master/Docs/img/V-EZ.PNG)
 
+Original repository: https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ
+
+This repository is supported by `PRIME-tech OSS` in order to develop an active community version due to lack of maintenance of the original.
+See discussion on [GitHub](https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/issues/73).
+Old version is on branch `original` of this repo for developers to compare changes and merge back to GPUOpen in the future if possible.
+
+## Main changes
+
+- Visual Studio is not supported due to development workflow of PRIME-tech's core team. Merge requests (MR) for VS-related issues is welcomed.
+- Ported & tested on multiple platforms, priority as follows: Linux (Ubuntu LTS), Windows 10, iOS, Android, MacOS.
+
+## Projects using V-EZ
+(Open an MR or Issue to add yours)
+
+- [Saga3D](https://gitlab.com/PRIME-tech-OSS/Saga3D): minimal, simple and cross-platform library for modern graphics
+
 ## Documentation
 
-The documentation for V-EZ can be found [here](https://gpuopen-librariesandsdks.github.io/V-EZ/)
+The documentation for V-EZ can be found [here](https://gpuopen-librariesandsdks.github.io/V-EZ/).
+
 ## Prerequisites
 
-* Windows 7, 8.1, 10 64-bit
-* Linux 64-bit (tested on Fedora, Ubuntu)
-* Visual Studio&reg; 2015 and later
-* GCC 4.9 and later
-* CMake 3.8 and later
-* LunarG Vulkan SDK 1.1.70
-
-## Hardware Support
-
-V-EZ is not hardware vendor specific and should work on non-AMD hardware.
+- GCC 4.9 or later
+- CMake 3.8 or later
+- LunarG Vulkan SDK 1.1.70 or later
 
 ## Building V-EZ
 
-- Run cmake to generate Visual Studio solution files or Linux make files.  No specific settings need to be set.
+- Run cmake to generate Visual Studio solution files or Linux make files. No specific settings need to be set.
 
 - Pull down submodules
 
@@ -32,7 +42,7 @@ V-EZ is not hardware vendor specific and should work on non-AMD hardware.
 
 `git submodule update`
 
-- Build V-EZ project.
+- Build V-EZ project
 
 ### Build for Android
 

@@ -24,7 +24,7 @@ Old version is on branch `original` of this repo for developers to compare chang
 
 ## Documentation
 
-The documentation for V-EZ can be found [here](https://gpuopen-librariesandsdks.github.io/V-EZ/).
+The documentation for V-EZ can be found [here](https://v-ez.prime-tech.io/).
 
 ## Prerequisites
 

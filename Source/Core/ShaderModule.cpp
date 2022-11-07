@@ -21,7 +21,9 @@
 //
 #include <stdio.h>
 #include <cstring>
+#ifdef INCLUDE_GLSL_COMPILER
 #include "Compiler/GLSLCompiler.h"
+#endif
 #include "Compiler/SPIRVReflection.h"
 #include "Device.h"
 #include "ShaderModule.h"
@@ -37,6 +39,8 @@ namespace vez
 
         // If application is passing in GLSL source code, compile to SPIR-V.
         VkResult result = VK_SUCCESS;
+
+#ifdef INCLUDE_GLSL_COMPILER
         if (pCreateInfo->pGLSLSource)
         {
             // Compiling from GLSL source requires the entry point.
@@ -49,26 +53,31 @@ namespace vez
             // Compile the GLSL source.
             if (!CompileGLSL2SPIRV(pCreateInfo->stage, pCreateInfo->pGLSLSource, pCreateInfo->pEntryPoint, shaderModule->m_spirv, shaderModule->m_infoLog))
             {
-                // Store ShaderModule object address so shader log can be retrived.  Set the native Vulkan object handle to the same memory address.
+                // Store ShaderModule object address so shader log can be retrieved. Set the native Vulkan object handle to the same memory address.
                 shaderModule->m_handle = reinterpret_cast<VkShaderModule>(shaderModule);
                 *ppShaderModule = shaderModule;
                 return VK_ERROR_INITIALIZATION_FAILED;
             }
-
-            // Save entry point name.
-            shaderModule->m_entryPoint = pCreateInfo->pEntryPoint;
         }
-        // Copy the shaderModule->m_spirv data into a separate vector.
         else
+#endif // INCLUDE_GLSL_COMPILER
+        if (pCreateInfo->pCode != nullptr && pCreateInfo->codeSize > 0)
         {
             shaderModule->m_spirv.resize(pCreateInfo->codeSize / sizeof(uint32_t));
             memcpy(shaderModule->m_spirv.data(), pCreateInfo->pCode, pCreateInfo->codeSize);
         }
+        else
+        {
+            return VK_ERROR_INITIALIZATION_FAILED;
+        }
 
-        // If GLSL compilation was successfull, or it wasn't needed, move onto the SPIR-V.
+		// Save entry point name.
+		shaderModule->m_entryPoint = pCreateInfo->pEntryPoint;
+
+        // If GLSL compilation was successful, or it wasn't needed, move onto the SPIR-V.
         if (result == VK_SUCCESS)
         {
-            // Reflection all shader resouces.
+            // Reflection all shader resources.
             if (!SPIRVReflectResources(shaderModule->m_spirv, shaderModule->m_stage, shaderModule->m_resources))
                 return VK_ERROR_INITIALIZATION_FAILED;
 

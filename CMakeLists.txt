@@ -24,6 +24,19 @@
 cmake_minimum_required(VERSION 3.8)
 project(VEZ VERSION 1.1.0 LANGUAGES CXX)
 
+option(VEZ_BUILD_SHARED_LIB "Build V-EZ Shared Library" OFF)
+
+option(INCLUDE_GLSL_COMPILER "Include GLSL compiler" ON)
+
+set(VEZ_LIB_TYPE STATIC)
+if(VEZ_BUILD_SHARED_LIB)
+    set(VEZ_LIB_TYPE SHARED)
+endif()
+
+if(INCLUDE_GLSL_COMPILER)
+	ADD_DEFINITIONS(-DINCLUDE_GLSL_COMPILER)
+endif()
+
 # Configure CCache if available
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)

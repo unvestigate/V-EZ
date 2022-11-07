@@ -22,13 +22,19 @@
 # #######################################################################################################################
 
 set(COMPILER_SOURCES
-    Compiler/GLSLCompiler.cpp
-    Compiler/GLSLCompiler.h
-    Compiler/ResourceLimits.cpp
-    Compiler/ResourceLimits.h
     Compiler/SPIRVReflection.cpp
     Compiler/SPIRVReflection.h
 )
+
+if (INCLUDE_GLSL_COMPILER)
+    set(COMPILER_SOURCES
+        ${COMPILER_SOURCES}
+        Compiler/GLSLCompiler.cpp
+        Compiler/GLSLCompiler.h
+        Compiler/ResourceLimits.cpp
+        Compiler/ResourceLimits.h
+    )
+endif()
 
 set(CORE_SOURCES
     Core/Buffer.cpp
@@ -115,26 +121,34 @@ if(WIN32)
     set(DEBUG_LIB_SUFFIX "d")
 endif(WIN32)
 
-add_library(VEZ SHARED ${COMPILER_SOURCES} ${CORE_SOURCES} ${UTILITY_SOURCES} ${ROOT_SOURCES})
+add_library(VEZ ${VEZ_LIB_TYPE} ${COMPILER_SOURCES} ${CORE_SOURCES} ${UTILITY_SOURCES} ${ROOT_SOURCES})
 
 include_directories(
     ${VEZ_ROOT_DIR}/Source
     ${VEZ_ROOT_DIR}/Libs/VulkanMemoryAllocator/include
     ${VEZ_ROOT_DIR}/External/SPIRV-Cross
-    ${VEZ_ROOT_DIR}/External/glslang
     Vulkan::Vulkan
 )
 
 target_link_libraries(VEZ
     PUBLIC Vulkan::Vulkan
-    PRIVATE glslang
-    PRIVATE OGLCompiler
-    PRIVATE OSDependent
-    PRIVATE SPIRV
-    PRIVATE SPVRemapper
     PRIVATE spirv-cross-core
     PRIVATE spirv-cross-glsl
 )
+
+if (INCLUDE_GLSL_COMPILER)
+    include_directories(
+        ${VEZ_ROOT_DIR}/External/glslang
+    )
+
+    target_link_libraries(VEZ
+        PRIVATE glslang
+        PRIVATE OGLCompiler
+        PRIVATE OSDependent
+        PRIVATE SPIRV
+        PRIVATE SPVRemapper
+    )
+endif()
 
 if (SDK_NAME MATCHES "iphoneos")
     target_link_libraries(VEZ

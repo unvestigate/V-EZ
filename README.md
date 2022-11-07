@@ -8,10 +8,6 @@ V-EZ is an open source, cross-platform wrapper intended to alleviate the inheren
 
 Original repository: https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ
 
-This repository is supported by `PRIME-tech OSS` in order to develop an active community version due to lack of maintenance of the original.
-See discussion on [GitHub](https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/issues/73).
-Old version is on branch `original` of this repo for developers to compare changes and merge back to GPUOpen in the future if possible.
-
 ## Main changes
 
 - Visual Studio is not supported due to development workflow of PRIME-tech's core team. Merge requests (MR) for VS-related issues is welcomed.

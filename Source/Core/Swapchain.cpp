@@ -253,6 +253,7 @@ namespace vez
         swapchainCreateInfo.presentMode = presentMode;
         swapchainCreateInfo.clipped = VK_TRUE;
         swapchainCreateInfo.oldSwapchain = m_handle;
+        swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 
         VkSwapchainKHR handle = VK_NULL_HANDLE;
         auto result = vkCreateSwapchainKHR(m_device->GetHandle(), &swapchainCreateInfo, nullptr, &handle);

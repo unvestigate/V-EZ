@@ -922,6 +922,10 @@ namespace vez
         uint32_t numBlocksX = pSubDataInfo->imageExtent.width / blockWidth;
         uint32_t numBlocksY = pSubDataInfo->imageExtent.height / blockHeight;
 
+        // With smallest mips numBlocksX/numBlocksY can end up becoming 0, so clamp them here.
+        numBlocksX = std::max(1U, numBlocksX);
+        numBlocksY = std::max(1U, numBlocksY);
+
         // Determine total number of compressed blocks that can be transferred at once.
         auto pinnedMemoryBufferSize = m_pinnedMemoryBuffer->GetCreateInfo().size;
         auto maxTransferBlocksY = std::min(numBlocksY, static_cast<uint32_t>(pinnedMemoryBufferSize / (blockSize * numBlocksX)));
@@ -999,7 +1003,10 @@ namespace vez
                         region.imageSubresource.mipLevel = pSubDataInfo->imageSubresource.mipLevel;
                         region.imageSubresource.layerCount = 1;
                         region.imageOffset = curOffset;
-                        region.imageExtent = VkExtent3D{ colsToCopy * blockWidth, rowsToCopy * blockHeight, 1U };
+                        region.imageExtent = VkExtent3D{ 
+                            std::min(pSubDataInfo->imageExtent.width, colsToCopy * blockWidth),
+                            std::min(pSubDataInfo->imageExtent.height, rowsToCopy * blockHeight), 1U };
+
                         cmdBuffer->Begin(VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
                         cmdBuffer->CmdCopyBufferToImage(m_pinnedMemoryBuffer, pImage, 1, &region);
                         cmdBuffer->End();

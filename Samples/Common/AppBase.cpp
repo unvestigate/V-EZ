@@ -197,7 +197,7 @@ int AppBase::Run()
     bool standardValidationFound = false;
     for (auto prop : layerProperties)
     {
-        if (std::string(prop.layerName) == "VK_LAYER_LUNARG_standard_validation")
+        if (std::string(prop.layerName) == "VK_LAYER_KHRONOS_validation")
         {
             standardValidationFound = true;
             break;
@@ -214,14 +214,25 @@ int AppBase::Run()
 
     // Initialize a Vulkan instance with the validation layers enabled and extensions required by glfw.
     uint32_t instanceExtensionCount = 0U;
-    auto instanceExtensions = glfwGetRequiredInstanceExtensions(&instanceExtensionCount);
+    auto iExtensions = glfwGetRequiredInstanceExtensions(&instanceExtensionCount);
+
+    std::vector<const char*> instanceExtensions;
+    for (size_t i = 0; i < instanceExtensionCount; ++i)
+    {
+        instanceExtensions.push_back(iExtensions[i]);
+    }
 
     std::vector<const char*> instanceLayers;
     if (m_enableValidationLayers && standardValidationFound)
-        instanceLayers.push_back("VK_LAYER_LUNARG_standard_validation");
+    {
+        instanceLayers.push_back("VK_LAYER_KHRONOS_validation");
+
+        instanceExtensions.push_back("VK_EXT_debug_utils");
+    }
     
     VezApplicationInfo appInfo = { nullptr, m_name.c_str(), VK_MAKE_VERSION(1, 0, 0), "", VK_MAKE_VERSION(0, 0, 0) };
-    VezInstanceCreateInfo createInfo = { nullptr, &appInfo, static_cast<uint32_t>(instanceLayers.size()), instanceLayers.data(), instanceExtensionCount, instanceExtensions };
+    VezInstanceCreateInfo createInfo = { nullptr, &appInfo, static_cast<uint32_t>(instanceLayers.size()), instanceLayers.data(),
+        static_cast<uint32_t>(instanceExtensions.size()), instanceExtensions.data() };
     auto result = vezCreateInstance(&createInfo, &m_instance);
     if (result != VK_SUCCESS)
     {

@@ -239,7 +239,7 @@ namespace vez
         swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
         swapchainCreateInfo.imageExtent = extent;
         swapchainCreateInfo.imageArrayLayers = 1;
-        swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
         //! TODO This should be conditional on queue being used
         swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;

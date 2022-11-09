@@ -552,6 +552,12 @@ namespace vez
             result = vkCreateImage(m_handle, &imageCreateInfo, nullptr, &handle);
         }
 
+        // Exit on error.
+        if (result != VK_SUCCESS)
+        {
+            return result;
+        }
+
         // Determine a "default" image layout based on the usage.  This default image layout will be assumed during command buffer recording.
         // Ordering of conditional statements below determine image layout precedence.
         // Example: When usage is SAMPLED_BIT, that takes precendence over the image being used as a color attachment or for transfer operations.

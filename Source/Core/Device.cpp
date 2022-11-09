@@ -449,7 +449,11 @@ namespace vez
 
     VkResult Device::FlushMappedBufferRanges(uint32_t bufferRangeCount, const VezMappedBufferRange* pBufferRanges)
     {
-        std::vector<VkMappedMemoryRange> memoryRanges(bufferRangeCount);
+        assert(bufferRangeCount <= 32);
+
+        VkMappedMemoryRange memoryRanges[32];
+        uint32_t memoryRangeCount = 0;
+        
         for (auto i = 0U; i < bufferRangeCount; ++i)
         {
             // Lookup Buffer object handle.
@@ -460,13 +464,25 @@ namespace vez
             VmaAllocationInfo allocInfo = {};
             vmaGetAllocationInfo(m_memAllocator, bufferImpl->GetAllocation(), &allocInfo);
 
-            memoryRanges[i].sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-            memoryRanges[i].memory = allocInfo.deviceMemory;
-            memoryRanges[i].offset = allocInfo.offset + pBufferRanges[i].offset;
-            memoryRanges[i].size = pBufferRanges[i].size;
+            if (m_memAllocator->IsMemoryTypeNonCoherent(allocInfo.memoryType))
+            {
+				memoryRanges[memoryRangeCount].sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+				memoryRanges[memoryRangeCount].memory = allocInfo.deviceMemory;
+				memoryRanges[memoryRangeCount].offset = allocInfo.offset + pBufferRanges[i].offset;
+				memoryRanges[memoryRangeCount].size = pBufferRanges[i].size;
+
+                ++memoryRangeCount;
+            }
         }
 
-        return vkFlushMappedMemoryRanges(m_handle, static_cast<uint32_t>(memoryRanges.size()), memoryRanges.data());
+        if (memoryRangeCount > 0)
+        {
+            return vkFlushMappedMemoryRanges(m_handle, memoryRangeCount, memoryRanges);
+        }
+        else
+        {
+            return VK_SUCCESS;
+        }
     }
 
     VkResult Device::InvalidateMappedBufferRanges(uint32_t bufferRangeCount, const VezMappedBufferRange* pBufferRanges)

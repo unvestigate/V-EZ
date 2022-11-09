@@ -133,6 +133,7 @@ namespace vez
         VmaAllocatorCreateInfo allocatorInfo = {};
         allocatorInfo.physicalDevice = pPhysicalDevice->GetHandle();
         allocatorInfo.device = handle;
+        allocatorInfo.instance = pPhysicalDevice->GetInstance()->GetHandle();
         result = vmaCreateAllocator(&allocatorInfo, &device->m_memAllocator);
         if (result != VK_SUCCESS)
         {

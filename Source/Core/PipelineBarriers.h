@@ -37,6 +37,11 @@ namespace vez
         VkPipelineStageFlags dstStageMask;
         std::vector<VkBufferMemoryBarrier> bufferBarriers;
         std::vector<VkImageMemoryBarrier> imageBarriers;
+
+		bool needNewBarrier(uint64_t _spos, VkPipelineStageFlags _srcStageMask, VkPipelineStageFlags _dstStageMask)
+		{
+			return streamPosition != _spos || srcStageMask != _srcStageMask || dstStageMask != _dstStageMask;
+		}
     };
 
     /* IMPLEMENTATION NOTES:    

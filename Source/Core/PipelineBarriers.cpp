@@ -184,7 +184,7 @@ namespace vez
                 //if (createNewPipelineBarrierEntry)
                 //    m_barriers.push_back({ streamPos, 0, 0, {}, {} });
                 // Create first barrier entry or merge with previous barrier if access is at same stream position.
-                if (m_barriers.size() == 0 || m_barriers.back().streamPosition != streamPos)
+                if (m_barriers.size() == 0 || m_barriers.back().needNewBarrier(streamPos, 0, 0))
                     m_barriers.push_back({ streamPos, 0, 0, {}, {} });
 
                 // Add the new buffer memory barrier.
@@ -220,7 +220,7 @@ namespace vez
         else if (RequiresPipelineBarrier(std::get<0>(result)->second.accessMask, accessMask))
         {
             // Create first barrier entry or merge with previous barrier if access is at same stream position.
-            if (m_barriers.size() == 0 || m_barriers.back().streamPosition != streamPos)
+            if (m_barriers.size() == 0 || m_barriers.back().needNewBarrier(streamPos, 0, 0))
                 m_barriers.push_back({ streamPos, 0, 0,{},{} });
 
             // Add buffer memory barrier.
@@ -304,7 +304,7 @@ namespace vez
                             auto levelCount = baseMipLevelMax - baseMipLevelMin;
 
                             // Try and merge barriers if they're occuring at the same command stream position.  Else create a new barrier entry.
-                            if (m_barriers.size() == 0 || m_barriers.back().streamPosition != streamPos)
+                            if (m_barriers.size() == 0 || m_barriers.back().needNewBarrier(streamPos, iter->stageMask, stageMask))
                                 m_barriers.push_back({ streamPos, iter->stageMask, stageMask, {}, {} });
 
                             // Add image memory barrier for overlapping region.
@@ -428,7 +428,7 @@ namespace vez
                 if (pImage->GetDefaultImageLayout() != layout && mipLevelBarrierMask)
                 {
                     // Create first barrier entry or merge with previous barrier if access is at same stream position.
-                    if (m_barriers.size() == 0 || m_barriers.back().streamPosition != streamPos)
+                    if (m_barriers.size() == 0 || m_barriers.back().needNewBarrier(streamPos, stageMask, stageMask))
                         m_barriers.push_back({ streamPos, stageMask, stageMask, {}, {} });
 
                     // Insert an image memory barrier for each group of active bits in mip level barrier mask.
@@ -471,7 +471,7 @@ namespace vez
                 if (defaultLayout != layout)
                 {
                     // Create first barrier entry or merge with previous barrier if access is at same stream position.
-                    if (m_barriers.size() == 0 || m_barriers.back().streamPosition != streamPos)
+                    if (m_barriers.size() == 0 || m_barriers.back().needNewBarrier(streamPos, stageMask, stageMask))
                         m_barriers.push_back({ streamPos, stageMask, stageMask, {}, {} });
 
                     VkImageMemoryBarrier imageBarrier = {};

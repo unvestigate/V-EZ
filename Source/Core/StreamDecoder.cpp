@@ -711,7 +711,11 @@ namespace vez
         for (auto i = 0U; i < attachmentCount; ++i)
         {
             VkClearAttachment& attachment = attachments[i];
-            attachment.aspectMask = GetImageAspectFlags(m_framebuffer->GetAttachment(i)->GetImage()->GetCreateInfo().format);
+
+            // https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/issues/80
+            //attachment.aspectMask = GetImageAspectFlags(m_framebuffer->GetAttachment(i)->GetImage()->GetCreateInfo().format);
+            attachment.aspectMask = GetImageAspectFlags(m_framebuffer->GetAttachment(pAttachments[i].colorAttachment)->GetImage()->GetCreateInfo().format);
+
             attachment.colorAttachment = pAttachments[i].colorAttachment;
             memcpy(&attachment.clearValue, &pAttachments[i].clearValue, sizeof(VkClearValue));
         }

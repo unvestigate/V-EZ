@@ -310,6 +310,7 @@ typedef struct VezImageSubresourceRange
     uint32_t levelCount;
     uint32_t baseArrayLayer;
     uint32_t layerCount;
+    VkImageAspectFlags aspect;
 } VezImageSubresourceRange;
 
 typedef struct VezImageViewCreateInfo

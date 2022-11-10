@@ -268,6 +268,8 @@ namespace vez
             if (depthStencilAttachmentIndex != VK_ATTACHMENT_UNUSED)
             {
                 allDepthStencilAttachments.push_back({ depthStencilAttachmentIndex, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL });
+				if (pDesc->subpasses[i].inputAttachments.find(depthStencilAttachmentIndex) != pDesc->subpasses[i].inputAttachments.end())
+					allDepthStencilAttachments.back().layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
                 subpassDescription.pDepthStencilAttachment = reinterpret_cast<const VkAttachmentReference*>(allDepthStencilAttachments.size());
             }
 

@@ -979,7 +979,8 @@ namespace vez
                                         break;
 
                                     case VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT:
-                                        imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+                                        //imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+                                        imageInfo.imageLayout = IsDepthStencilFormat(bindingInfo.pImageView->GetFormat()) ? VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL : VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
                                         break;
 
                                     case VK_DESCRIPTOR_TYPE_STORAGE_IMAGE:

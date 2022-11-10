@@ -660,7 +660,8 @@ namespace vez
         for (auto i = 0U; i < rangeCount; ++i)
         {
             VkImageSubresourceRange& range = ranges[i];
-            range.aspectMask = GetImageAspectFlags(pImage->GetCreateInfo().format);
+            //range.aspectMask = GetImageAspectFlags(pImage->GetCreateInfo().format);
+            range.aspectMask = pRanges->aspect == 0 ? GetImageAspectFlags(pImage->GetCreateInfo().format) : pRanges->aspect;
             range.baseMipLevel = pRanges[i].baseMipLevel;
             range.levelCount = pRanges[i].levelCount;
             range.baseArrayLayer = pRanges[i].baseArrayLayer;
@@ -685,7 +686,8 @@ namespace vez
         for (auto i = 0U; i < rangeCount; ++i)
         {
             VkImageSubresourceRange& range = ranges[i];
-            range.aspectMask = GetImageAspectFlags(pImage->GetCreateInfo().format);
+            //range.aspectMask = GetImageAspectFlags(pImage->GetCreateInfo().format);
+            range.aspectMask = pRanges->aspect == 0 ? GetImageAspectFlags(pImage->GetCreateInfo().format) : pRanges->aspect;
             range.baseMipLevel = pRanges[i].baseMipLevel;
             range.levelCount = pRanges[i].levelCount;
             range.baseArrayLayer = pRanges[i].baseArrayLayer;

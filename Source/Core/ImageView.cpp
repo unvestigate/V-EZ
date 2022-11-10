@@ -37,7 +37,8 @@ namespace vez
         createInfo.viewType = static_cast<VkImageViewType>(viewType);
         createInfo.format = static_cast<VkFormat>(format);
         memcpy(&createInfo.components, &components, sizeof(VkComponentMapping));
-        createInfo.subresourceRange.aspectMask = GetImageAspectFlags(format);
+        //createInfo.subresourceRange.aspectMask = GetImageAspectFlags(format);
+        createInfo.subresourceRange.aspectMask = subresourceRange.aspect == 0 ? GetImageAspectFlags(format) : subresourceRange.aspect;
         createInfo.subresourceRange.baseMipLevel = subresourceRange.baseMipLevel;
         createInfo.subresourceRange.levelCount = subresourceRange.levelCount;
         createInfo.subresourceRange.baseArrayLayer = subresourceRange.baseArrayLayer;

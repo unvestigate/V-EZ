@@ -115,7 +115,11 @@ namespace vez
         // Create the pipeline layout handle.
         std::vector<VkDescriptorSetLayout> setLayouts;
         for (auto it : pipeline->m_descriptorSetLayouts)
-            setLayouts.push_back(it.second->GetHandle());
+		{
+			if (setLayouts.size() <= it.first)
+				setLayouts.resize(it.first + 1);
+			setLayouts[it.first] = it.second->GetHandle();
+		}
 
         std::vector<VkPushConstantRange> pushConstantRanges;
         for (auto it : pipeline->m_resources)

@@ -975,6 +975,24 @@ namespace vez
                                     case VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER:
                                     case VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE:
                                         //imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+                                        ///////////////////////////////////////
+                                        // Adding these checks and barriers seems to have fixed issues with images
+                                        // being used as RT attachments failing to have the correct image layouts 
+                                        // later when being used as shader inputs. Really not sure about them though...
+                                        if (imageInfo.imageLayout == VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
+                                        {
+                                            imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+                                            m_pipelineBarriers.ImageAccess(m_stream.TellP(), bindingInfo.pImageView->GetImage(), &bindingInfo.pImageView->GetSubresourceRange(), imageInfo.imageLayout, accessMask, stageMask);
+                                        }
+
+                                        if (imageInfo.imageLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+                                        {
+                                            imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+                                            m_pipelineBarriers.ImageAccess(m_stream.TellP(), bindingInfo.pImageView->GetImage(), &bindingInfo.pImageView->GetSubresourceRange(), imageInfo.imageLayout, accessMask, stageMask);
+                                        }
+                                        ///////////////////////////////////////
+                                        
                                         //m_pipelineBarriers.ImageAccess(m_stream.TellP(), bindingInfo.pImageView->GetImage(), &bindingInfo.pImageView->GetSubresourceRange(), imageInfo.imageLayout, accessMask, stageMask);
                                         break;
 

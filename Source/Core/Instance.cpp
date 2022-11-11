@@ -39,7 +39,7 @@ namespace vez
         appInfo.applicationVersion = pCreateInfo->pApplicationInfo->applicationVersion;
         appInfo.pEngineName = pCreateInfo->pApplicationInfo->pEngineName;
         appInfo.engineVersion = pCreateInfo->pApplicationInfo->engineVersion;
-        appInfo.apiVersion = VK_API_VERSION_1_0;
+        appInfo.apiVersion = pCreateInfo->pApplicationInfo->apiVersion == 0 ? VK_API_VERSION_1_0 : pCreateInfo->pApplicationInfo->apiVersion;
 
         // Create VkInstance.
         VkInstanceCreateInfo instanceCreateInfo = {};

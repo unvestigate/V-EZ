@@ -165,8 +165,8 @@ namespace vez
             attachment.samples = imageView->GetImage()->GetCreateInfo().samples;
             attachment.loadOp = pBeginInfo->pAttachments[i].loadOp;
             attachment.storeOp = pBeginInfo->pAttachments[i].storeOp;
-            attachment.stencilLoadOp = pBeginInfo->pAttachments[i].loadOp;
-            attachment.stencilStoreOp = pBeginInfo->pAttachments[i].storeOp;
+			attachment.stencilLoadOp = pBeginInfo->pAttachments[i].stencilLoadOp;
+			attachment.stencilStoreOp = pBeginInfo->pAttachments[i].stencilStoreOp;
             attachment.initialLayout = m_pipelineBarriers.GetImageLayout(imageView);
 
             // For now, reset final layout to initial layout so as to keep command stream state well defined.

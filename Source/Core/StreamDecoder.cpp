@@ -162,7 +162,7 @@ namespace vez
                     // Bind the pipeline.
                     vkCmdBindPipeline(commandBuffer.GetHandle(), nextPipelineBinding->bindPoint, nextPipelineBinding->pipeline);
 
-                    // Move to the next pipelien binding in the list.
+                    // Move to the next pipeline binding in the list.
                     ++nextPipelineBinding;
                 }
             }

@@ -414,6 +414,8 @@ typedef struct VezAttachmentInfo
 {
     VkAttachmentLoadOp loadOp;
     VkAttachmentStoreOp storeOp;
+	VkAttachmentLoadOp stencilLoadOp;
+	VkAttachmentStoreOp stencilStoreOp;
     VkClearValue clearValue;
 } VezAttachmentReference;
 

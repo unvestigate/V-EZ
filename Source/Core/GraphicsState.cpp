@@ -382,16 +382,18 @@ namespace vez
 
         // Add all VkColorBlendAttachments.
         ColorBlendAttachmentBitField* cb = reinterpret_cast<ColorBlendAttachmentBitField*>(&hash[sizeof(GraphicsStateBitField) >> 3]);
+
+        // Applied the suggested fix from here: https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ/issues/84
         for (auto i = 0U; i < m_colorBlendState.attachmentCount; ++i)
         {
-            cb->colorWriteMask = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].colorWriteMask);
-            cb->blendEnable = m_colorBlendState.pAttachments[i].blendEnable;
-            cb->srcColorBlendFactor = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].srcColorBlendFactor);
-            cb->dstColorBlendFactor = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].dstColorBlendFactor);
-            cb->colorBlendOp = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].colorBlendOp);
-            cb->srcAlphaBlendFactor = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].srcAlphaBlendFactor);
-            cb->dstAlphaBlendFactor = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].dstAlphaBlendFactor);
-            cb->alphaBlendOp = static_cast<uint32_t>(m_colorBlendState.pAttachments[i].alphaBlendOp);
+            cb->colorWriteMask = static_cast<uint32_t>(m_colorBlendAttachments[i].colorWriteMask);
+            cb->blendEnable = m_colorBlendAttachments[i].blendEnable;
+            cb->srcColorBlendFactor = static_cast<uint32_t>(m_colorBlendAttachments[i].srcColorBlendFactor);
+            cb->dstColorBlendFactor = static_cast<uint32_t>(m_colorBlendAttachments[i].dstColorBlendFactor);
+            cb->colorBlendOp = static_cast<uint32_t>(m_colorBlendAttachments[i].colorBlendOp);
+            cb->srcAlphaBlendFactor = static_cast<uint32_t>(m_colorBlendAttachments[i].srcAlphaBlendFactor);
+            cb->dstAlphaBlendFactor = static_cast<uint32_t>(m_colorBlendAttachments[i].dstAlphaBlendFactor);
+            cb->alphaBlendOp = static_cast<uint32_t>(m_colorBlendAttachments[i].alphaBlendOp);
             ++cb;
         }
 
